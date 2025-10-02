@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { FaMoon, FaSun } from "react-icons/fa6";
 
 type Theme = "light" | "dark";
 

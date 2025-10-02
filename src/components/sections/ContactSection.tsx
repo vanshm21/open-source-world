@@ -21,7 +21,7 @@ import { useTheme } from "../../context/ThemeContext";
 const ContactSection: React.FC = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
