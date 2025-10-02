@@ -146,10 +146,10 @@ const ContactSection: React.FC = () => {
             </p>
           </motion.div>
 
-          <div className= "grid grid-cols-1 md:grid-cols-2 gap-12 items-stretch"  >
+          <div className= "grid grid-cols-1 md:grid-cols-2 gap-12"  >
             {/* Contact Form */}
-            <motion.div variants={itemVariants} className = "h-full">
-              <div className={theme === 'light' ? "card p-8 h-full" : "card p-8 h-full bg-[#444b4a]"}>
+            <motion.div variants={itemVariants}>
+              <div className={theme === 'light' ? "card p-8" : "card p-8 bg-[#444b4a]"}>
                 <h3 className={theme === 'light'? "text-2xl font-bold text-secondary-900 mb-6": "text-2xl font-bold text-white bg-[#444b4a] mb-6"}>Send Message</h3>
                 
                 {isSubmitted ? (
@@ -224,13 +224,13 @@ const ContactSection: React.FC = () => {
                         rows={6}
                         value={formData.message}
                         onChange={handleInputChange}
-                        className={theme === 'light'? `w-full px-4 py-6 border-2 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-none ${
+                        className={theme === 'light'? `w-full px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors resize-none ${
                           errors.message ? 'border-red-300' : 'border-gray-200'
                         }`: `w-full px-4 bg-[#928f96]  py-6 border-2 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 placeholder:text-gray-200 transition-colors resize-none ${
                           errors.message ? 'border-red-300' : 'border-gray-200'
                         }`}
                         placeholder="Tell us about your project, questions, or how you'd like to contribute..."
-                      />
+                      />for
                       {errors.message && (
                         <p className="mt-2 text-sm text-red-600">{errors.message}</p>
                       )}
@@ -333,10 +333,9 @@ const ContactSection: React.FC = () => {
                   ))}
                 </div>
               </div>
-  </motion.div>
-          </div>
-          {/* Newsletter Subscription */}
-  <div className="card p-8 bg-gradient-to-r from-primary-500 to-primary-600 text-white mt-12">
+
+               {/* Newsletter Subscription */}
+  <div className="card p-8 bg-gradient-to-r from-primary-500 to-primary-600 text-white">
                 <h3 className={theme === 'light' ? "text-2xl font-bold text-secondary-900 mb-6" : "text-2xl font-bold text-white mb-6"}>Stay Updated</h3>
     <p className="mb-6 text-white">
       Subscribe to our newsletter for the latest updates, opportunities, and open source insights.
@@ -357,6 +356,8 @@ const ContactSection: React.FC = () => {
 
     </div>
   </div>
+  </motion.div>
+          </div>
         </motion.div>
       </div>
     </section>
