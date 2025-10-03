@@ -145,11 +145,10 @@ const ContactSection: React.FC = () => {
               We'd love to hear from you and explore how we can collaborate.
             </p>
           </motion.div>
-
-          <div className= "grid grid-cols-1 md:grid-cols-2 gap-12"  >
+          <div className= "grid grid-cols-1 md:grid-cols-2 gap-12 items-stretch"  >
             {/* Contact Form */}
-            <motion.div variants={itemVariants}>
-              <div className={theme === 'light' ? "card p-8" : "card p-8 bg-[#444b4a]"}>
+            <motion.div variants={itemVariants} className='h-full'>
+              <div className={theme === 'light' ? "card p-8 h-full" : "card p-8 h-full bg-[#444b4a]"}>
                 <h3 className={theme === 'light'? "text-2xl font-bold text-secondary-900 mb-6": "text-2xl font-bold text-white bg-[#444b4a] mb-6"}>Send Message</h3>
                 
                 {isSubmitted ? (
@@ -333,30 +332,28 @@ const ContactSection: React.FC = () => {
                   ))}
                 </div>
               </div>
-
-               {/* Newsletter Subscription */}
-  <div className="card p-8 bg-gradient-to-r from-primary-500 to-primary-600 text-white">
+            </motion.div>
+            {/* Newsletter Subscription */}
+              <div className="card p-8 bg-gradient-to-r from-primary-500 to-primary-600 text-white col-span-1 md:col-span-2">
                 <h3 className={theme === 'light' ? "text-2xl font-bold text-secondary-900 mb-6" : "text-2xl font-bold text-white mb-6"}>Stay Updated</h3>
-    <p className="mb-6 text-white">
-      Subscribe to our newsletter for the latest updates, opportunities, and open source insights.
-    </p>
-    <div className="flex flex-col sm:flex-row gap-3">
-      <input
-        type="email"
-        placeholder="Enter your email"
-        className="flex-1 px-4 py-3 rounded-xl text-secondary-900 focus:outline-none focus:ring-2 focus:ring-white min-h-[50px]"
-      />
-     <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="bg-white text-[#073f70] font-semibold px-6 py-3 rounded-xl hover:bg-[#073f70] hover:text-white transition-colors h-[50px]"
-      >
-        Subscribe
-      </motion.button>
-
-    </div>
-  </div>
-  </motion.div>
+                <p className="mb-6 text-white">
+                  Subscribe to our newsletter for the latest updates, opportunities, and open source insights.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    className="flex-1 px-4 py-3 rounded-xl text-secondary-900 focus:outline-none focus:ring-2 focus:ring-white min-h-[50px]"
+                  />
+                <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-white text-[#073f70] font-semibold px-6 py-3 rounded-xl hover:bg-[#073f70] hover:text-white transition-colors h-[50px]"
+                  >
+                    Subscribe
+                  </motion.button>
+                </div>
+              </div>
           </div>
         </motion.div>
       </div>
