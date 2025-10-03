@@ -51,13 +51,14 @@ const ContactSection: React.FC = () => {
       color: theme === "light" ? "hover:bg-gray-800" : "hover:bg-gray-600",
       description: "Contribute to our projects",
     },
-    {
-      name: "LinkedIn",
-      icon: FaLinkedin,
-      url: "https://linkedin.com/company/open-source-world",
-      color: "hover:bg-blue-600",
-      description: "Professional network",
-    },
+    // LinkedIn link temporarily removed - company page needs to be created
+    // {
+    //   name: "LinkedIn",
+    //   icon: FaLinkedin,
+    //   url: "https://linkedin.com/company/open-source-world",
+    //   color: "hover:bg-blue-600",
+    //   description: "Professional network",
+    // },
     {
       name: "Discord",
       icon: FaDiscord,
