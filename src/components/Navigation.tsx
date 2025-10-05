@@ -141,7 +141,7 @@ const Navigation: React.FC = () => {
             ? // When scrolled we inset the nav slightly from the edges so it appears "floating"
               theme === "light"
               ? "left-4 right-4 sm:left-6 sm:right-6 lg:left-8 lg:right-8 bg-white/85 backdrop-blur-sm shadow-lg border border-gray-200 rounded-2xl"
-              : "left-4 right-4 sm:left-6 sm:right-6 lg:left-8 lg:right-8 bg-gray-900/95 backdrop-blur-sm shadow-lg border border-white-800 rounded-2xl"
+              : "left-4 right-4 sm:left-6 sm:right-6 lg:left-8 lg:right-8 bg-gray-900/95 backdrop-blur-sm shadow-lg border border-white/20 rounded-2xl"
             : "left-0 right-0 bg-transparent"
         }`}
         style={{ willChange: 'transform' }}
