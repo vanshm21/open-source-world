@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -9,6 +9,9 @@ const Navigation: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const lastFocusedRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,6 +34,10 @@ const Navigation: React.FC = () => {
   };
 
   const toggleMobileMenu = () => {
+    if (!isMobileMenuOpen) {
+      // opening: store last focused element to restore later
+      lastFocusedRef.current = document.activeElement as HTMLElement | null;
+    }
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
@@ -53,18 +60,91 @@ const Navigation: React.FC = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Accessibility: focus trap and Escape to close when mobile menu is open
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    // lock body scroll
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    // focus the close button (if present) after menu opens
+    const focusTimer = setTimeout(() => {
+      if (closeButtonRef.current) closeButtonRef.current.focus();
+      else if (menuRef.current) menuRef.current.focus();
+    }, 50);
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setIsMobileMenuOpen(false);
+        return;
+      }
+
+      if (e.key === "Tab") {
+        // trap focus inside menu
+        const menuNode = menuRef.current;
+        if (!menuNode) return;
+        const focusable = Array.from(
+          menuNode.querySelectorAll<HTMLElement>(
+            'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((el) => !el.hasAttribute("disabled"));
+
+        if (focusable.length === 0) {
+          e.preventDefault();
+          menuNode.focus();
+          return;
+        }
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      clearTimeout(focusTimer);
+      window.removeEventListener("keydown", handleKeyDown);
+      // restore body scroll
+      document.body.style.overflow = prevOverflow || "";
+      // restore focus to last focused element
+      if (lastFocusedRef.current) {
+        try {
+          lastFocusedRef.current.focus();
+        } catch (err) {
+          /* ignore */
+        }
+      }
+    };
+  }, [isMobileMenuOpen]);
+
   return (
     <>
       <motion.nav
         initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        animate={isScrolled ? { y: 12 } : { y: 0 }}
+        transition={{ type: 'tween', duration: 0.28 }}
+        className={`fixed top-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? theme === "light"
-              ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200"
-              : "bg-gray-900/95 backdrop-blur-md shadow-lg border-b border-gray-700"
-            : "bg-transparent"
+            ? // When scrolled we inset the nav slightly from the edges so it appears "floating"
+              theme === "light"
+              ? "left-4 right-4 sm:left-6 sm:right-6 lg:left-8 lg:right-8 bg-white/85 backdrop-blur-sm shadow-lg border border-gray-200 rounded-2xl"
+              : "left-4 right-4 sm:left-6 sm:right-6 lg:left-8 lg:right-8 bg-gray-900/95 backdrop-blur-sm shadow-lg border border-white-800 rounded-2xl"
+            : "left-0 right-0 bg-transparent"
         }`}
+        style={{ willChange: 'transform' }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -180,6 +260,12 @@ const Navigation: React.FC = () => {
                   ? "bg-white shadow-2xl"
                   : "bg-gray-900 shadow-2xl"
               }`}
+              // Accessibility: menu container
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="mobile-menu-title"
+              ref={menuRef}
+              tabIndex={-1}
             >
               <div className="flex flex-col h-full">
                 {/* Mobile Menu Header */}
@@ -189,11 +275,13 @@ const Navigation: React.FC = () => {
                       theme === "light" ? "text-primary-600" : "text-white"
                     }`}
                   >
-                    Menu
+                    <h2 id="mobile-menu-title">Menu</h2>
                   </div>
                   <motion.button
                     whileTap={{ scale: 0.9 }}
                     onClick={closeMobileMenu}
+                    ref={closeButtonRef}
+                    aria-label="Close menu"
                     className={`p-2 rounded-lg ${
                       theme === "light"
                         ? "text-gray-600 hover:bg-gray-100"
