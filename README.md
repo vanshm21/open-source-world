@@ -1,5 +1,7 @@
 # Open Source World (OSW) 🌍
 
+![Open Source World Banner](./public/osw-banner.png)
+
 > Connecting developers worldwide through open source collaboration
 
 A modern, responsive landing page for Open Source World, built with React.js, TypeScript, Tailwind CSS, and Framer Motion. This project showcases our global community initiative and the Open Source Kashmir (OSK) regional branch.
@@ -8,7 +10,9 @@ A modern, responsive landing page for Open Source World, built with React.js, Ty
 [![TypeScript](https://img.shields.io/badge/TypeScript-4.9.5-blue.svg)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.4.17-38B2AC.svg)](https://tailwindcss.com/)
 [![Framer Motion](https://img.shields.io/badge/Framer%20Motion-12.23.12-0055FF.svg)](https://www.framer.com/motion/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Hacktoberfest](https://img.shields.io/badge/Hacktoberfest-2025-brightgreen?style=flat)](https://hacktoberfest.com/)
+[![Contributing](https://img.shields.io/badge/Contribute-Welcome-blueviolet?style=flat)](./CONTRIBUTING.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 ## ✨ Features
 
@@ -169,14 +173,7 @@ Our regional branch focused on nurturing open source talent and creating opportu
 
 ## 🤝 Contributing
 
-We welcome contributions! Here's how you can help:
-
-1. **Fork the repository**
-2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
-3. **Make your changes** and test thoroughly
-4. **Commit your changes** (`git commit -m 'Add amazing feature'`)
-5. **Push to the branch** (`git push origin feature/amazing-feature`)
-6. **Open a Pull Request**
+We welcome contributions — please read [`CONTRIBUTING.md`](./CONTRIBUTING.md) for our contribution guidelines, branch naming, PR checklist, and how to request `hacktoberfest-accepted` labeling.
 
 ### Contribution Guidelines
 
