@@ -46,7 +46,7 @@ A modern, responsive landing page for Open Source World, built with React.js, Ty
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/oathar/open-source-world.git
+   git clone https://github.com/theopensourceworld/open-source-world.git
    cd open-source-world
    ```
 
