@@ -61,7 +61,7 @@ const ContactSection: React.FC = () => {
     {
       name: "Discord",
       icon: FaDiscord,
-      url: "https://discord.gg/gEHBwfDX",
+      url: "https://discord.gg/hgnUsqAmMT",
       color: "hover:bg-indigo-600",
       description: "Join our community",
     },

@@ -4,6 +4,11 @@
 
 > Connecting developers worldwide through open source collaboration
 
+
+<a href="https://github.com/theopensourceworld/open-source-world/graphs/contributors">
+  <img src="https://contributors-img.web.app/image?repo=theopensourceworld/open-source-world" />
+</a>
+
 A modern, responsive landing page for Open Source World, built with React.js, TypeScript, Tailwind CSS, and Framer Motion. This project showcases our global community initiative and the Open Source Kashmir (OSK) regional branch.
 
 [![React](https://img.shields.io/badge/React-19.1.1-blue.svg)](https://reactjs.org/)
