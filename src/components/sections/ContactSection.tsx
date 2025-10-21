@@ -5,7 +5,6 @@ import { useRef } from "react";
 import emailjs from '@emailjs/browser';
 import {
   FaGithub,
-  FaLinkedin,
   FaDiscord,
   FaYoutube,
   FaEnvelope,
@@ -62,7 +61,7 @@ const ContactSection: React.FC = () => {
     {
       name: "Discord",
       icon: FaDiscord,
-      url: "https://discord.gg/gEHBwfDX",
+      url: "https://discord.gg/hgnUsqAmMT",
       color: "hover:bg-indigo-600",
       description: "Join our community",
     },
@@ -278,7 +277,7 @@ const ContactSection: React.FC = () => {
                                 errors.name
                                   ? "border-red-300"
                                   : "border-gray-200"
-                              } bg-[#928f96] text-white placeholder:text-white`
+                              } bg-transparent text-white placeholder:text-white`
                         }
                         placeholder="Enter your full name"
                       />
@@ -317,7 +316,7 @@ const ContactSection: React.FC = () => {
                                 errors.email
                                   ? "border-red-300"
                                   : "border-gray-200"
-                              } bg-[#928f96] text-white placeholder:text-white`
+                              } bg-transparent text-white placeholder:text-white`
                         }
                         placeholder="Enter your email address"
                       />
@@ -356,7 +355,7 @@ const ContactSection: React.FC = () => {
                                 errors.message
                                   ? "border-red-300"
                                   : "border-gray-200"
-                              } bg-[#928f96] text-white placeholder:text-gray-200`
+                              } bg-transparent text-white placeholder:text-gray-200`
                         }
                         placeholder="Tell us about your project, questions, or how you'd like to contribute..."
                       />

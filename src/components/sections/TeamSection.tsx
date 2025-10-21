@@ -16,7 +16,7 @@ const TeamSection: React.FC = () => {
       name: "Athar Ramzan",
       role: "Founder & CEO",
       bio: "Passionate about open source and community building. Committed to building a more inclusive and diverse tech community.",
-      avatar: "/profiles/athar1.jpg",
+      avatar: "https://devpalsai.netlify.app/athar.jpg",
       social: {
         github: "https://github.com/oathar",
         linkedin: "https://www.linkedin.com/in/athar-ramzan/",
@@ -48,42 +48,7 @@ const TeamSection: React.FC = () => {
         email: "mohammed@opensource-kashmir.org"
       }
     },
-    {
-      name: "Emily Rodriguez",
-      role: "Community Manager",
-      bio: "Building bridges between developers worldwide. Passionate about diversity and inclusion in tech.",
-      avatar: "/profiles/emily.jpg",
-      social: {
-        github: "https://github.com",
-        linkedin: "https://linkedin.com",
-        twitter: "https://twitter.com",
-        email: "emily@opensource-world.org"
-      }
-    },
-    {
-      name: "David Park",
-      role: "Lead Developer",
-      bio: "Open source enthusiast with expertise in modern web technologies. Contributor to major OSS projects.",
-      avatar: "/profiles/david.jpg",
-      social: {
-        github: "https://github.com",
-        linkedin: "https://linkedin.com",
-        twitter: "https://twitter.com",
-        email: "david@opensource-world.org"
-      }
-    },
-    {
-      name: "Priya Sharma",
-      role: "Developer Relations",
-      bio: "Connecting developers with opportunities. Background in developer advocacy and technical writing.",
-      avatar: "/profiles/priya.jpg",
-      social: {
-        github: "https://github.com",
-        linkedin: "https://linkedin.com",
-        twitter: "https://twitter.com",
-        email: "priya@opensource-world.org"
-      }
-    }
+    
   ];
 
   const SocialLink = ({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) => (
@@ -184,6 +149,65 @@ const TeamSection: React.FC = () => {
               </motion.div>
             ))}
           </div>
+
+          {/* Contributors Section */}
+          <motion.div variants={itemVariants} className="text-center mt-12 sm:mt-16">
+            <div className={theme === 'light'? "bg-gradient-to-br from-primary-50 to-white p-6 sm:p-8 rounded-2xl border border-primary-100": "bg-gradient-to-br from-gray-800 to-gray-900 p-6 sm:p-8 rounded-2xl border border-gray-700"}>
+              <h3 className={theme === 'light'? "text-2xl sm:text-3xl font-bold text-secondary-900 mb-4": "text-2xl sm:text-3xl font-bold text-white mb-4"}>
+                Our Amazing <span className="text-gradient">Contributors</span>
+              </h3>
+              <p className={theme === 'light'? "text-sm sm:text-base text-secondary-600 mb-6 max-w-2xl mx-auto": "text-sm sm:text-base text-white mb-6 max-w-2xl mx-auto"}>
+                Every contribution matters! Thank you to all the amazing developers who have helped build Open Source World.
+                Together, we're creating something incredible.
+              </p>
+              
+              {/* Contributors Image */}
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="bg-white rounded-xl p-4 shadow-lg inline-block mb-6"
+              >
+                <a 
+                  href="https://github.com/theopensourceworld/open-source-world/graphs/contributors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
+                  <img 
+                    src="https://contributors-img.web.app/image?repo=theopensourceworld/open-source-world" 
+                    alt="Contributors to Open Source World"
+                    className="max-w-full h-auto rounded-lg"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDQwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjZjNmNGY2Ii8+Cjx0ZXh0IHg9IjIwMCIgeT0iNTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiM2YjczODAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCI+Q29udHJpYnV0b3JzPC90ZXh0Pgo8L3N2Zz4K';
+                    }}
+                  />
+                </a>
+              </motion.div>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <motion.a
+                  href="https://github.com/theopensourceworld/open-source-world/graphs/contributors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="btn-secondary text-sm sm:text-base min-h-[44px] px-6 flex items-center gap-2"
+                >
+                  <FaGithub className="text-lg" />
+                  View All Contributors
+                </motion.a>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => window.open('https://github.com/theopensourceworld/open-source-world', '_blank')}
+                  className="btn-primary text-sm sm:text-base min-h-[44px] px-6 flex items-center gap-2"
+                >
+                  <FaGithub className="text-lg" />
+                  Contribute Now
+                </motion.button>
+              </div>
+            </div>
+          </motion.div>
 
           {/* Join Team CTA */}
           <motion.div variants={itemVariants} className="text-center mt-12 sm:mt-16">

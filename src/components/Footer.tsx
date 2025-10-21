@@ -69,21 +69,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gray-900 text-white">
-      {/* Back to Top Button */}
-      <div className="bg-gray-800 py-3 sm:py-4 border-b border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.button
-            onClick={scrollToTop}
-            whileHover={{ y: -2 }}
-            className="flex items-center justify-center w-full py-2 sm:py-3 text-gray-300 hover:text-white transition-colors duration-300 min-h-[44px] text-sm sm:text-base"
-          >
-            <FaArrowUp className="mr-2" />
-            Back to Top
-          </motion.button>
-        </div>
-      </div>
-
+    <footer className="bg-gray-900 text-white relative">
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8">
@@ -104,7 +90,7 @@ const Footer = () => {
                   <p className="text-blue-400 text-xs sm:text-sm font-medium">Global Innovation Community</p>
                 </div>
               </div>
-              
+
               <p className="text-gray-300 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">
                 Connecting developers worldwide through open source collaboration. 
                 Building the future of technology together, one commit at a time.
@@ -253,6 +239,16 @@ const Footer = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* Back to Top Button just above Bottom Bar */}
+      <motion.button
+        onClick={scrollToTop}
+        whileHover={{ scale: 1.1, y: -2 }}
+        className="absolute bottom-28 right-6 w-12 h-12 sm:w-14 sm:h-14 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 z-50"
+        aria-label="Back to top"
+      >
+        <FaArrowUp size={20} />
+      </motion.button>
 
       {/* Bottom Bar */}
       <div className="bg-black py-4 sm:py-6 border-t border-gray-700">
