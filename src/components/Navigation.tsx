@@ -30,7 +30,7 @@ const Navigation: React.FC = () => {
   const navItems = [
     { name: "Home", href: "/", type: "route" },
     { name: "About", href: "/about", type: "route" },
-    { name: "Team", href: "/#team", type: "scroll" },
+    { name: "Team", href: "/team", type: "route" },
     { name: "Contact", href: "/#contact", type: "scroll" },
   ];
 
