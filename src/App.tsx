@@ -1,32 +1,25 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
-import HeroSection from './components/sections/HeroSection';
-import AboutSection from './components/sections/AboutSection';
-import TeamSection from './components/sections/TeamSection';
-import ContactSection from './components/sections/ContactSection';
-import CTABanner from './components/sections/CTABanner';
 import Footer from './components/Footer';
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
 import { ThemeProvider } from './context/ThemeContext';
 
 function App() {
   return (
-    
-    
-   
-    <div className="App">
-       <ThemeProvider>
-        <Navigation />
-        <main>
-          <HeroSection />
-          <AboutSection />
-          <TeamSection />
-          <CTABanner />
-          <ContactSection />
-        </main>
-        <Footer />
-       </ThemeProvider>
-    </div>
-    
+    <Router>
+      <div className="App">
+        <ThemeProvider>
+          <Navigation />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+          </Routes>
+          <Footer />
+        </ThemeProvider>
+      </div>
+    </Router>
   );
 }
 

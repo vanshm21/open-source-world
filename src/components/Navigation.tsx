@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Moon, Sun, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import "../index.css";
 import { useTheme } from "../context/ThemeContext";
@@ -9,9 +10,8 @@ const Navigation: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
-  const menuRef = useRef<HTMLDivElement | null>(null);
-  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
-  const lastFocusedRef = useRef<HTMLElement | null>(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,10 +23,10 @@ const Navigation: React.FC = () => {
   }, []);
 
   const navItems = [
-    { name: "About", href: "#about" },
-    { name: "Initiatives", href: "#initiatives" },
-    { name: "Team", href: "#team" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", href: "/", type: "route" },
+    { name: "About", href: "/about", type: "route" },
+    { name: "Team", href: "/#team", type: "scroll" },
+    { name: "Contact", href: "/#contact", type: "scroll" },
   ];
 
   const closeMobileMenu = () => {
@@ -42,9 +42,32 @@ const Navigation: React.FC = () => {
   };
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+    // Handle hash-based navigation
+    if (href.startsWith('/#')) {
+      const hash = href.substring(2);
+      if (location.pathname !== '/') {
+        navigate('/');
+        setTimeout(() => {
+          const element = document.querySelector(`#${hash}`);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 100);
+      } else {
+        const element = document.querySelector(`#${hash}`);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    } else if (href.startsWith('#')) {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      // Route navigation
+      navigate(href);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
     closeMobileMenu();
   };
@@ -151,7 +174,10 @@ const Navigation: React.FC = () => {
             {/* Logo */}
             <motion.div
             whileHover={{ scale: 1.05 }}
-            onClick={() => scrollToSection("#hero")}
+            onClick={() => {
+              navigate('/');
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
             className='flex items-center space-x-2 cursor-pointer'>
             <div className='w-14 h-10 rounded-xl flex items-center justify-center bg-gradient-to-br from-[#073f70] to-[#1f84d6]'>
               <span className='text-white font-bold text-base sm:text-lg'>

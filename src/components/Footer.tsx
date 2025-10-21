@@ -1,33 +1,57 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FaGithub, FaLinkedin, FaTwitter, FaYoutube, FaHeart, FaGlobe, FaEnvelope, FaArrowUp } from 'react-icons/fa';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (href.startsWith('/#')) {
+      const hash = href.substring(2);
+      if (location.pathname !== '/') {
+        navigate('/');
+        setTimeout(() => {
+          const element = document.querySelector(`#${hash}`);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 100);
+      } else {
+        const element = document.querySelector(`#${hash}`);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    } else if (href.startsWith('#')) {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else if (href.startsWith('/')) {
+      navigate(href);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const footerLinks = {
     company: [
-      { name: 'About OSW', href: '#about' },
-      { name: 'Our Mission', href: '#about' },
-      { name: 'Team', href: '#team' },
-      { name: 'Contact', href: '#contact' }
+      { name: 'About OSW', href: '/about' },
+      { name: 'Our Mission', href: '/about' },
+      { name: 'Team', href: '/#team' },
+      { name: 'Contact', href: '/#contact' }
     ],
     community: [
-      { name: 'Join Community', href: '#contact' },
+      { name: 'Join Community', href: '/#contact' },
       { name: 'Contribute', href: 'https://github.com/theopensourceworld/open-source-world', external: true },
-      { name: 'Our Initiatives', href: '#initiatives' },
-      { name: 'Newsletter', href: '#contact' }
+      { name: 'Our Initiatives', href: '/#initiatives' },
+      { name: 'Newsletter', href: '/#contact' }
     ],
     resources: [
       { name: 'Documentation', href: 'https://github.com/theopensourceworld/open-source-world', external: true },
