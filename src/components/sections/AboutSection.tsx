@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaCode, FaUsers, FaGlobe } from "react-icons/fa";
 import { itemVariants, containerVariants } from "../../utils/animations";
 import { useTheme } from "../../context/ThemeContext";
@@ -10,6 +11,7 @@ const AboutSection: React.FC = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const { theme } = useTheme();
+  const navigate = useNavigate();
 
   const features = [
     {
@@ -102,12 +104,22 @@ const AboutSection: React.FC = () => {
               <h3 className='text-2xl sm:text-3xl font-bold mb-4 sm:mb-6'>
                 Our Mission
               </h3>
-              <p className='text-base sm:text-xl leading-relaxed max-w-4xl mx-auto'>
+              <p className='text-base sm:text-xl leading-relaxed max-w-4xl mx-auto mb-6'>
                 To democratize technology education, foster innovation through
                 collaboration, and create sustainable opportunities for
                 developers worldwide while maintaining strong local roots and
                 global perspectives.
               </p>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => {
+                  navigate('/about');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className='bg-white text-[#073f70] hover:bg-[#e8f4fd] font-bold py-3 px-8 rounded-2xl transition-all duration-300 shadow-lg text-base sm:text-lg min-h-[48px]'>
+                Learn More About Us
+              </motion.button>
             </div>
           </motion.div>
         </motion.div>
