@@ -44,7 +44,7 @@ const Footer = () => {
     company: [
       { name: 'About OSW', href: '/about' },
       { name: 'Our Mission', href: '/about' },
-      { name: 'Team', href: '/#team' },
+      { name: 'Team', href: '/team' },
       { name: 'Contact', href: '/#contact' }
     ],
     community: [

@@ -2,7 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope, FaArrowRight } from 'react-icons/fa';
 import { itemVariants, containerVariants } from '../../utils/animations';
 import { useTheme } from '../../context/ThemeContext';
 
@@ -10,6 +11,7 @@ const TeamSection: React.FC = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const { theme } = useTheme();
+  const navigate = useNavigate();
 
   const teamMembers = [
     {
@@ -78,10 +80,18 @@ const TeamSection: React.FC = () => {
             <h2 className={theme === 'light'? "text-3xl sm:text-4xl font-bold mb-4 text-secondary-900": "text-3xl sm:text-4xl font-bold mb-4 text-white"}>
               Meet Our <span className="text-gradient">Amazing Team</span>
             </h2>
-            <p className={theme === 'light'? "text-base sm:text-lg text-secondary-600 max-w-2xl mx-auto": "text-base sm:text-lg text-white max-w-2xl mx-auto"}>
-              Passionate individuals working together to build the future of open source collaboration.
-              Each bringing unique skills and perspectives to our global mission.
+            <p className={theme === 'light'? "text-base sm:text-lg text-secondary-600 max-w-2xl mx-auto mb-6": "text-base sm:text-lg text-white max-w-2xl mx-auto mb-6"}>
+              Passionate individuals from around the world working together to build the future of open source collaboration. Get to know the people behind Open Source World.
             </p>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate('/team')}
+              className="inline-flex items-center gap-2 text-primary-600 hover:text-primary-700 font-semibold text-base group"
+            >
+              View Full Team
+              <FaArrowRight className="group-hover:translate-x-1 transition-transform duration-300" size={14} />
+            </motion.button>
           </motion.div>
 
           {/* Team Grid */}
@@ -211,25 +221,35 @@ const TeamSection: React.FC = () => {
 
           {/* Join Team CTA */}
           <motion.div variants={itemVariants} className="text-center mt-12 sm:mt-16">
-            <div className={theme === 'light'? "bg-gray-100 p-6 sm:p-8 rounded-2xl inline-block": "dark:darkbg p-6 sm:p-8 rounded-2xl inline-block"}>
-              <h3 className={theme === 'light'? "text-2xl sm:text-3xl font-bold text-secondary-900 mb-4 sm:mb-6": "text-2xl sm:text-3xl font-bold text-white mb-4 sm:mb-6"}>Want to Join Our Team?</h3>
-              <p className={theme === 'light'? "text-sm sm:text-base text-secondary-600 mb-4 sm:mb-6 max-w-xl mx-auto": "text-sm sm:text-base text-white mb-4 sm:mb-6 max-w-xl mx-auto" }>
-                We're always looking for passionate individuals who share our vision of 
-                building a better world through open source technology.
+            <div className={theme === 'light'? "bg-gradient-to-br from-primary-50 to-white p-6 sm:p-8 rounded-2xl border border-primary-100": "bg-gradient-to-br from-gray-800 to-gray-900 p-6 sm:p-8 rounded-2xl border border-gray-700"}>
+              <h3 className={theme === 'light'? "text-2xl sm:text-3xl font-bold text-secondary-900 mb-4": "text-2xl sm:text-3xl font-bold text-white mb-4"}>Want to Learn More About Our Team?</h3>
+              <p className={theme === 'light'? "text-sm sm:text-base text-secondary-600 mb-6 max-w-xl mx-auto": "text-sm sm:text-base text-white mb-6 max-w-xl mx-auto" }>
+                Discover detailed profiles, expertise areas, key achievements, and how our team is making an impact in the open source world.
               </p>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => {
-                  const element = document.querySelector('#contact');
-                  if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
-                className="btn-primary text-base sm:text-lg min-h-[48px] px-6"
-              >
-                Get In Touch
-              </motion.button>
+              <div className="flex flex-col sm:flex-row gap-3 items-center justify-center">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => navigate('/team')}
+                  className="btn-primary text-base sm:text-lg min-h-[48px] px-6 flex items-center gap-2"
+                >
+                  View Full Team
+                  <FaArrowRight size={16} />
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => {
+                    const element = document.querySelector('#contact');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className="btn-secondary text-base sm:text-lg min-h-[48px] px-6"
+                >
+                  Join Our Team
+                </motion.button>
+              </div>
             </div>
           </motion.div>
         </motion.div>
