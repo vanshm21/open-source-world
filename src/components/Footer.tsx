@@ -1,15 +1,103 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { FaGithub, FaLinkedin, FaTwitter, FaYoutube, FaHeart, FaGlobe, FaEnvelope, FaArrowUp } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaTwitter, FaYoutube, FaHeart, FaGlobe, FaEnvelope, FaArrowUp, FaCheckCircle } from 'react-icons/fa';
+import emailjs from '@emailjs/browser';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Newsletter state management
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [isSubscribing, setIsSubscribing] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [subscribeError, setSubscribeError] = useState('');
+
+  // EmailJS configuration - Using environment variables
+  const EMAILJS_SERVICE_ID = process.env.REACT_APP_EMAILJS_SERVICE_ID || '';
+  const EMAILJS_NEWSLETTER_TEMPLATE_ID = process.env.REACT_APP_EMAILJS_NEWSLETTER_TEMPLATE_ID || '';
+  const EMAILJS_PUBLIC_KEY = process.env.REACT_APP_EMAILJS_PUBLIC_KEY || '';
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const validateEmail = (email: string) => {
+    if (!email.trim()) {
+      return 'Email is required';
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return 'Please enter a valid email address';
+    }
+    return '';
+  };
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const error = validateEmail(email);
+    if (error) {
+      setEmailError(error);
+      return;
+    }
+
+    setIsSubscribing(true);
+    setSubscribeError('');
+
+    try {
+      // Check if EmailJS is properly configured
+      if (!EMAILJS_SERVICE_ID || !EMAILJS_NEWSLETTER_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+        throw new Error('EmailJS configuration missing. Please check your environment variables.');
+      }
+
+      // Send newsletter subscription using EmailJS
+      const templateParams = {
+        to_email: 'opensourceworld.fyi@gmail.com', // Your recipient email
+        from_email: email,
+        subscriber_email: email,
+        to_name: 'Open Source World Team',
+        subscription_date: new Date().toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        }),
+        message: `New newsletter subscription from: ${email}`
+      };
+
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_NEWSLETTER_TEMPLATE_ID,
+        templateParams,
+        EMAILJS_PUBLIC_KEY
+      );
+
+      setIsSubscribing(false);
+      setIsSubscribed(true);
+      setEmail('');
+
+      // Reset success message after 5 seconds
+      setTimeout(() => {
+        setIsSubscribed(false);
+      }, 5000);
+    } catch (error) {
+      console.error('EmailJS Newsletter Error:', error);
+      setIsSubscribing(false);
+      setSubscribeError('Failed to subscribe. Please try again later.');
+    }
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    // Clear error when user starts typing
+    if (emailError) {
+      setEmailError('');
+    }
+    if (subscribeError) {
+      setSubscribeError('');
+    }
   };
 
   const scrollToSection = (href: string) => {
@@ -221,21 +309,66 @@ const Footer = () => {
             <p className="text-gray-300 mb-4 sm:mb-6 max-w-2xl mx-auto text-sm sm:text-base">
               Get the latest updates on open source projects, community events, and opportunities directly in your inbox.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto px-4">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-4 py-3 rounded-xl bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base min-h-[48px]"
-              />
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-300 shadow-lg flex items-center justify-center space-x-2 text-sm sm:text-base min-h-[48px]"
+            
+            {isSubscribed ? (
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="max-w-md mx-auto px-4 py-6"
               >
-                <FaEnvelope />
-                <span>Subscribe</span>
-              </motion.button>
-            </div>
+                <div className="flex items-center justify-center space-x-3 text-green-400">
+                  <FaCheckCircle size={24} />
+                  <span className="text-lg font-semibold">Successfully Subscribed!</span>
+                </div>
+                <p className="text-gray-300 mt-2 text-sm">Thank you for joining our community!</p>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleNewsletterSubmit} className="max-w-md mx-auto px-4">
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="flex-1">
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={handleEmailChange}
+                      placeholder="Enter your email"
+                      disabled={isSubscribing}
+                      className={`w-full px-4 py-3 rounded-xl bg-gray-700 border text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 text-sm sm:text-base min-h-[48px] ${
+                        emailError ? 'border-red-400' : 'border-gray-600'
+                      } ${isSubscribing ? 'opacity-75 cursor-not-allowed' : ''}`}
+                    />
+                  </div>
+                  <motion.button
+                    type="submit"
+                    disabled={isSubscribing}
+                    whileHover={!isSubscribing ? { scale: 1.05 } : {}}
+                    whileTap={!isSubscribing ? { scale: 0.95 } : {}}
+                    className={`bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-300 shadow-lg flex items-center justify-center space-x-2 text-sm sm:text-base min-h-[48px] ${
+                      isSubscribing ? 'opacity-75 cursor-not-allowed' : ''
+                    }`}
+                  >
+                    {isSubscribing ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <span>Subscribing...</span>
+                      </>
+                    ) : (
+                      <>
+                        <FaEnvelope />
+                        <span>Subscribe</span>
+                      </>
+                    )}
+                  </motion.button>
+                </div>
+                {emailError && (
+                  <p className="mt-2 text-sm text-red-400 text-left">{emailError}</p>
+                )}
+                {subscribeError && (
+                  <div className="mt-3 p-3 bg-red-900/50 border border-red-400 text-red-300 rounded-xl">
+                    <p className="text-sm">{subscribeError}</p>
+                  </div>
+                )}
+              </form>
+            )}
           </div>
         </motion.div>
       </div>
